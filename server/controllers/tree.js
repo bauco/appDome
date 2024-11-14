@@ -161,3 +161,135 @@ exports.createTree = async (req, res, next) => {
     res.status(500).json({ error: 'Failed to process the tree' });
   }
 }
+
+
+// Function to read data from files based on the category
+async function readFromFile(filePath) {
+  try {
+    if (fs.existsSync(filePath)) {
+      const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+      return JSON.parse(fileContent);  // Return parsed JSON data
+    }
+    return [];  // Return an empty array if the file doesn't exist
+  } catch (error) {
+    throw new Error(`Failed to read from file at ${filePath}: ${error.message}`);
+  }
+}
+
+// Helper function to build the menu structure with hierarchical identifiers
+function buildMenuStructure(items) {
+  const menuMap = new Map();
+  
+  // Create a map of item by id
+  items.forEach(item => {
+    menuMap.set(item.id, {
+      identifier: item.id.toString(), // Set identifier as a string
+      label: item.label,
+      iconName: item.iconName,
+      iconFill: item.iconFill || false, // Default to false if undefined
+      children: [],
+      active: item.active,
+      category: item.category,
+      parentId: item.parentId
+    });
+  });
+
+  // Build the nested structure based on parentId
+  const result = [];
+
+  items.forEach(item => {
+    const menuItem = menuMap.get(item.id);
+
+    if (item.parentId === 0) {
+      result.push(menuItem);
+    } else {
+      const parent = menuMap.get(item.parentId);
+      if (parent) {
+        parent.children.push(menuItem);
+      }
+    }
+  });
+
+  // Assign hierarchical identifiers for nested items
+  function assignIdentifiers(menu, parentIdentifier = '') {
+    menu.forEach((item, index) => {
+      const newIdentifier = parentIdentifier ? `${parentIdentifier}.${index + 1}` : `${index + 1}`;
+      item.identifier = newIdentifier;
+      
+      // Recursively assign identifiers to children
+      if (item.children.length > 0) {
+        assignIdentifiers(item.children, newIdentifier);
+      }
+    });
+  }
+
+  assignIdentifiers(result);
+
+  return result;
+}
+
+// Function to recursively transform the data
+function transformMenuData(data) {
+  const transformItem = (item, parentId = 0) => {
+    return {
+      identifier: item.identifier,
+      label: item.label,
+      iconName: item.iconName,
+      children: item.children && item.children.length > 0 ? item.children.map(child => transformItem(child, item.identifier)) : [],
+      active: item.active,
+      category: item.category,
+      parentId: parentId
+    };
+  };
+
+  const transformedData = Object.keys(data).map(categoryId => {
+    return {
+      identifier: categoryId,
+      label: `Category ${categoryId}`, // Assuming category names are dynamically determined
+      iconName: 'category', // Default icon for the category
+      children: data[categoryId].map(item => transformItem(item))
+    };
+  });
+
+  return transformedData;
+}
+
+
+// GET Method: Read the tree data from files and return as JSON
+exports.getTree = async (req, res) => {
+  try {
+    const publicDir = path.join(path.dirname(path.dirname(process.mainModule.filename)), 'server', 'public');
+    
+    // Read the filenames in the public directory
+    const files = await fs.promises.readdir(publicDir);
+
+    // Filter only the JSON files (categories)
+    const categoryFiles = files.filter(file => file.endsWith('.json'));
+
+    if (categoryFiles.length === 0) {
+      res.status(404).json({ error: 'No tree data found' });
+      return;
+    }
+
+    // Initialize the result object
+    const result = {};
+
+    // Read data from each category file and add it to the result object
+    for (const file of categoryFiles) {
+      const category = path.basename(file, '.json'); // Get the category name (filename without extension)
+      const filePath = path.join(publicDir, file);
+      const data = await readFromFile(filePath);
+
+      // Build the hierarchical structure and add it to the result
+      result[category] = buildMenuStructure(data);
+      
+    }
+
+    // Return the transformed data
+    res.json(transformMenuData(result));
+
+  } catch (error) {
+    console.error('Error retrieving the tree data:', error);
+    res.status(500).json({ error: 'Failed to retrieve the tree data' });
+  }
+};
