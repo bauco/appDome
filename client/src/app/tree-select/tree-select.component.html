@@ -13,8 +13,8 @@
   </div>
   <div class="tree-node">
     <div class="search-bar">
-      <input type="text" [(ngModel)]="searchQuery" (input)="filterTree(searchQuery)" placeholder="Search...">
-      <span class="material-symbols-outlined">search</span>
+      <input #myInput type="text" [(ngModel)]="searchQuery" (input)="filterTree(searchQuery)" placeholder="Search...">
+      <span (click)="myInput.focus()" class="material-symbols-outlined search-item">search</span>
     <button (click)="clearSearch()">
       <span class="material-symbols-outlined">close</span>
     </button>
