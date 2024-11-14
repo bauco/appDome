@@ -1,0 +1,28 @@
+@for(node of nodeData; track node){
+    @if(node.visbility !== false){
+      <div class="tree-node">
+        <div class="node-header" [class.selected]="node.selected" >
+            @if(node.children && node.children.length > 0){
+                <button class="expand-btn" (click)="toggleNode(node)">            
+                    <span class="material-symbols-outlined">
+                        {{!node.expanded ? 'chevron_right' :'keyboard_arrow_down'}}
+                    </span>
+                </button>
+                <input type="checkbox" [(ngModel)]="node.selected" (change)="toggleSelect(node)" [indeterminate]="allSelected(node)">
+            }
+            @else {
+                <input type="checkbox" [(ngModel)]="node.selected" (change)="toggleSelect(node)">
+            }
+            <span class="material-symbols-outlined{{ node.iconFill ? ' fill' : ''}}" >
+                {{node.iconName}}
+            </span>
+            <span >{{ node.label }}</span>
+        </div>
+        @if(node.expanded && node.children && node.children.length > 0){
+            <div class="child">
+                <app-tree-node  [(nodeData)]="node.children" (nodeDataChange)="nodeChildDataChange(node)"></app-tree-node>
+            </div>
+        }
+    </div>
+    }
+}

@@ -1,0 +1,31 @@
+[
+    {
+      "displayName": "Documents",
+      "iconName": "folder",
+      "children": [
+        {
+          "displayName": "Work",
+          "iconName": "work",
+          "active": true
+        },
+        {
+          "displayName": "Home",
+          "iconName": "home",
+          "active": true
+        }
+      ]
+    },
+    {
+      "displayName": "Events",
+      "iconName": "calendar",
+      "children": [],
+      "active": true
+    },
+    {
+      "displayName": "Movies",
+      "iconName": "star",
+      "children": [],
+      "active": false
+    }
+  ]
+  

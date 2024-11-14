@@ -1,0 +1,27 @@
+<div class="tree">
+  <div class="dropdown">
+    <div class="dropdown-summary">
+      <input type="text" [value]="getLabelSummary()" readonly >
+      <button class="dropdown-button" (click)="toggleDropdown()"><span class="material-symbols-outlined">keyboard_arrow_down</span>
+      </button>
+    </div>
+      <ul class="dropdown-content" [class.show]="isDropdownOpen">
+          @for(selected of selectedData; track selected){
+            <li>{{selected.label}}</li>
+          }
+      </ul>
+  </div>
+  <div class="tree-node">
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="searchQuery" (input)="filterTree(searchQuery)" placeholder="Search...">
+      <span class="material-symbols-outlined">search</span>
+    <button (click)="clearSearch()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div>
+    <app-tree-node [(nodeData)]="treeData" (nodeDataChange)="nodeTreeDataChange(treeData)" ></app-tree-node>
+  </div>
+</div>
+
+</div>

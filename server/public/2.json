@@ -1,0 +1,30 @@
+[
+  {
+    "id": 3,
+    "label": "Movies",
+    "iconName": "star",
+    "iconFill": true,
+    "children": [],
+    "active": true,
+    "category": "2",
+    "parentId": 0
+  },
+  {
+    "id": 2,
+    "label": "Events",
+    "iconName": "calendar_today",
+    "children": [],
+    "active": true,
+    "category": "2",
+    "parentId": 0
+  },
+  {
+    "id": 4,
+    "label": "Sub-Event 1",
+    "iconName": "event",
+    "children": [],
+    "active": true,
+    "category": "2",
+    "parentId": 2
+  }
+]

@@ -1,0 +1,92 @@
+/* src/app/tree-select/tree-select.component.css */
+.tree-select-container {
+    position: relative;
+    width: 250px;
+  }
+  
+  .selection-display {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+  
+  .search-bar {
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9fbfc;
+  }
+  
+  .search-bar input {
+    flex-grow: 1;
+
+    border: none;
+    outline: none;
+    background-color: white;
+  }
+  
+  .search-bar button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .tree-node {
+    padding: 0px;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown input[type="text"]{
+    height: 100%;
+    margin-right: 30px;
+    flex-grow: 1; /* Make the input fill available space */
+    border: none; /* Remove default border */
+    background-color: transparent; /* Make background transparent */
+  }
+  
+  .dropdown-button {
+    margin-left: -30px;
+    background: transparent;
+    border: none;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    /* ... dropdown content styles */
+  }
+  .dropdown-summary{
+    display: flex;
+    align-items: center;
+    width: 100%; /* Adjust width as needed */
+    height: 100%; /* Adjust height as needed */
+  }
+  .dropdown-content.show {
+    display: block;
+  }
+  .tree{
+    width: 300px;
+  }
+
+  .child {
+    padding-left: 24px; /* Extra indentation for child nodes */
+  }
+  

@@ -1,0 +1,50 @@
+  .selection-display {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .tree-node {
+    padding-left: 12px;
+  }
+  
+  .node-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .expand-btn {
+    width: 30px;
+    text-align: center;
+    background: none;
+    border: none;
+    font-size: 16px;
+  }
+  
+  .node-header input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  .node-header.selected {
+    background-color: #f0f7fe;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  input[type="checkbox"]:indeterminate {
+    accent-color: white;
+    border: white 5px solid;
+    color-scheme: dark;
+    &::before,
+    &::after {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+        border-radius: 2px;
+    }
+  }
+  .child {
+    padding-left: 24px; /* Extra indentation for child nodes */
+  }
+  
