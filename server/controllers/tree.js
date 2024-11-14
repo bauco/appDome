@@ -9,9 +9,26 @@ wss.on('connection', (socket) => {
   ws = socket;
 });
 const writeQueue = {};  // A queue to manage file write operations by category
-
+function sanitizeCategory(input) {
+  // Basic sanitization: remove any non-alphanumeric characters (whitelist approach)
+  const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "");
+  
+  // Further validate against allowed categories
+  if (input === sanitizedInput) {
+    return sanitizedInput;
+  } else {
+    console.warn(`Rejected invalid or malicious category: ${input}`);
+    return null; // or handle as per your requirement, e.g., set a default value
+  }
+}
 // Function to validate each node in the tree
 function validateNode(node) {
+  if(node.category){
+    node.category = sanitizeCategory(node.category);
+    if(!node.category){
+      return 'Node "category" is required and must be a valid string';
+    }
+  }
   if (typeof node.id !== 'number') {
     return 'Node "id" is required and must be a number';
   }
