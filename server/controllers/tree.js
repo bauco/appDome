@@ -1,6 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+let ws;
 
+// When a client connects to the WebSocket server, we capture the ws instance
+wss.on('connection', (socket) => {
+  ws = socket;
+});
 const writeQueue = {};  // A queue to manage file write operations by category
 
 // Function to validate each node in the tree
@@ -150,6 +157,10 @@ exports.createTree = async (req, res, next) => {
     // Handle multiple requests concurrently
     Promise.all(promises)
       .then(() => {
+        if (ws) {  // Assuming `ws` is your WebSocket instance
+          
+          ws.send(JSON.stringify({ action: 'getTree' }));
+        }
         res.json({ message: 'Tree processed and data saved to JSON files.' });
       })
       .catch(error => {

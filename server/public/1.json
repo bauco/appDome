@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "label": "Documents",
+    "iconName": "folder",
+    "children": [],
+    "active": true,
+    "category": "1",
+    "parentId": 0
+  },
+  {
+    "id": 2,
+    "label": "Events",
+    "iconName": "calendar_today",
+    "children": [],
+    "active": true,
+    "category": "1",
+    "parentId": 0
+  }
+]
