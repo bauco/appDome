@@ -18,9 +18,9 @@
     left: 0;
     width: 100%;
     border: 1px solid #ccc;
-    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    background-color: white;
   }
   
   .search-bar {
@@ -46,6 +46,9 @@
   }
   
   .tree-node {
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
     padding: 0px;
   }
   .dropdown {
