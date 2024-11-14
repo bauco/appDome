@@ -12,6 +12,7 @@
   
   .node-header {
     display: flex;
+    overflow: hidden; /* Hide any overflowed content */
     align-items: center;
     cursor: pointer;
   }
