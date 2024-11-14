@@ -1,11 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MenuItem } from './MenuItem';
 import { TreeSelectComponent } from './tree-select/tree-select.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TreeSelectComponent],
+  imports: [ TreeSelectComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.None
